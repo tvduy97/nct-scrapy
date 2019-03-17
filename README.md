@@ -4,7 +4,9 @@ Clone project to a FOLDER by command:
 	git clone https://github.com/tvduy97/nct-scrapy.git
 
 Open Anaconda Prompt, move to FOLDER/nct-scrapy/nhaccuatui
+
 Run this command to crawl data to file .csv (the file name can be changed)
+
 	scrapy crawl lyric -o filename.csv
 
 We have a file named file.csv is an example of data crawled, open it by notepad or sublime text to view (do not use excel)
