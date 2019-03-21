@@ -24,10 +24,23 @@ class LyricSpider(scrapy.Spider):
             yield scrapy.Request(linkLyric, callback=self.saveFile)
 
     def saveFile(self, response):
-      lyricRaw = response.xpath('//div[@class="box-content"]/div[@class="wrap"]/div[@class="content-wrap"]/div[@class="box-left"]/div[@class="lyric"]/p[@id="divLyric"]/text()').extract()
-      lyric = "\n".join(lyricRaw[1:])
+      def extract_with_css(query):
+        return response.css(query).get(default='').strip()
+
+      def extract_singer(query):
+        return response.css(query).getall()
+
+      def extract_lyric(query):
+        sentences = response.css(query).getall()
+        lyric = ''
+        for st in sentences:
+          lyric = lyric + st.strip()
+          lyric = lyric + " "
+        return lyric
+
       item = NhaccuatuiItem()
-      item['name'] = lyricRaw[0].encode("utf-8")
-      item['lyric'] = lyric.encode("utf-8")
-      item['link'] = response.url.encode("utf-8")
+      item['title'] = extract_with_css('div.name_title h1::text')
+      item['singer'] = extract_singer('div.name_title h2 a.name_singer::text')
+      item['lyric'] = extract_lyric('#divLyric *::text')
+      item['link'] = response.url
       yield item
