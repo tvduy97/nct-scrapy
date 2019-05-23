@@ -12,5 +12,5 @@ class NhaccuatuiItem(scrapy.Item):
     title = scrapy.Field()
     singer = scrapy.Field()
     lyric = scrapy.Field()
-    link = scrapy.Field()
+    id = scrapy.Field()
     pass

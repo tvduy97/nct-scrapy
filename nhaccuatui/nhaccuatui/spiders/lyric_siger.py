@@ -79,5 +79,5 @@ class LyricSingerSpider(scrapy.Spider):
         item['singer'] = extract_singer(
             'div.name_title h2 a.name_singer::text')
         item['lyric'] = extract_lyric('#divLyric *::text')
-        item['link'] = response.url
+        item['id'] = response.url
         yield item
